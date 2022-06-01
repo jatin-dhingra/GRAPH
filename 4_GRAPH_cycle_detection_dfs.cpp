@@ -1,49 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define pb push_back
 
-bool checkcycle(int i,int par,vector<int>adj[],vector<int>visited)
+bool cycledfs(int node, int parent,vector<int>&vec,vector<int>&vec[])
 {
-  visited[i]=true;
-
-  for(auto num:adj[i])
+  vis[node]=1;
+  for(auto it:vec[node])
   {
-    if(visited[num]==0)
+    if(!vis[it])
     {
-      if(checkcycle(num,i,adj,visited))
+      if(cycledfs(it,node,vec,vis))
       {
         return true;
       }
-    }
-    else if(num!=par)
-    {
-      return true;
+      else if(it!=parent){
+        return true;
+      }
     }
   }
   return false;
-
 }
 
 int main()
 {
   int n{},m{};
   cin>>n>>m;
-  vector<int>adj[n+1];
-  vector<int>visited(n+1,0);
+  vector<int>vis(n+1,0);
+  vector<int>vec[m+1];
   for(int i{};i<m;i++){
     int u{},v{};
     cin>>u>>v;
-    adj[u].pb(v);
-    adj[v].pb(u);
+    vec[u].push_back(v);
+    vec[v].push_back(u);
   }
 
-  for(int i{};i<n;i++){
-    if(!visited[i])
+  for(int i{};i<m;i++){
+    if(vis[i]==0)
     {
-      if(checkcycle(i,-1,adj,visited))
+      if(cycledfs(i,-1,vec,vis))
       {
-        return true;
+        cout<<"Cycle";
       }
     }
   }
+
 }
