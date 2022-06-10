@@ -1,13 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
-int main(){
+int main()
+{
   int n{},m{};
   cin>>n>>m;
   vector<int>adj[n+1];
-
-  vector<int>dis(n,0);
-  queue<int>q;
-  for(int i{};i<n;i++)
+  for(int i{};i<m;i++)
   {
     int u{},v{};
     cin>>u>>v;
@@ -16,12 +14,10 @@ int main(){
   }
   int source{};
   cin>>source;
-  for(int i{};i<n;i++){
-    dis[i]=INT_MAX;
-  }
-  dis[source]=0;
-
+  queue<int>q;
   q.push(source);
+  vector<int>dis(n,INT_MAX);
+  dis[source]=0;
   while(!q.empty())
   {
     int node=q.front();
@@ -35,11 +31,9 @@ int main(){
       }
     }
   }
-  for(auto i:dis)
-  {
-    cout<<i<<" ";
+  for(auto it:dis){
+    cout<<it<<" ";
   }
   cout<<endl;
-
 
 }
